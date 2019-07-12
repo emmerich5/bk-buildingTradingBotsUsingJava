@@ -1,1 +1,1 @@
-# bk-buildingTradingBotsUsingJava
+# BOOK - TRADING BOTS USING JAVA (2016)
