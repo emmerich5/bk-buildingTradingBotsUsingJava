@@ -20,7 +20,7 @@
 | ----------- | ------- | 	
 | Services should solve a single problem or collection of problems. | Easy unit testing, and code reuse |
 | Services should be loosely couple | Reduces dependencies, and becomes more maintainable |
-| Services must have high unit test coverage | Prevents bug manifestation in production (financial transactions |
+| Services must have high unit test coverage | Prevents bug manifestation in production (financial transactions) |
 
 ## Code Organization
 
@@ -29,6 +29,9 @@ Three JARS (3 projects)
 * **tradingbot-core** : Generic trading exchange implementation with generic services/interfaces.
 * **oanda-restapi** : Specific trading exchange implementation of API
 * **tradingbot-app** : Main application which utilizes trading implementation (Spring Injection), provides strategies, and future integrations (Social Media) 
+
+Main Book Package `com.precioustech.fxtrading`
+Main Local Package `com.fx`
 
 ## Coding Stack
 
@@ -46,6 +49,62 @@ Three JARS (3 projects)
 * Using fxTrade Practice/Test URL: https://api-fxpractice.oanda.com
 * Must Generate API Token for demo account: Manage API Access > Revoke OR Generate (depending which do you need) Only 1 per account. 
 * Must use testing account: MyFunds > fxTrade Practice Accounts > v20 Account Number: nnn-nnn-nnnnmmmm-nnn
+
+Request Example:
+```http
+GET /v3/accounts/101-001-11608487-001/instruments/ HTTP/1.1
+Host: api-fxpractice.oanda.com
+Authorization: Bearer hereisalargetoken-code
+Cache-Control: no-cache
+```
+
+Answer Example:
+```http
+{
+    "instruments": [
+        {
+            "name": "EUR_ZAR",
+            "type": "CURRENCY",
+            "displayName": "EUR/ZAR",
+            "pipLocation": -4,
+            "displayPrecision": 5,
+            "tradeUnitsPrecision": 0,
+            "minimumTradeSize": "1",
+            "maximumTrailingStopDistance": "1.00000",
+            "minimumTrailingStopDistance": "0.00050",
+            "maximumPositionSize": "0",
+            "maximumOrderUnits": "100000000",
+            "marginRate": "0.07",
+            "tags": [
+                {
+                    "type": "ASSET_CLASS",
+                    "name": "CURRENCY"
+                }
+            ]
+        },
+        {
+            "name": "EUR_PLN",
+            "type": "CURRENCY",
+            "displayName": "EUR/PLN",
+            "pipLocation": -4,
+            "displayPrecision": 5,
+            "tradeUnitsPrecision": 0,
+            "minimumTradeSize": "1",
+            "maximumTrailingStopDistance": "1.00000",
+            "minimumTrailingStopDistance": "0.00050",
+            "maximumPositionSize": "0",
+            "maximumOrderUnits": "100000000",
+            "marginRate": "0.05",
+            "tags": [
+                {
+                    "type": "ASSET_CLASS",
+                    "name": "CURRENCY"
+                }
+            ]
+        }
+    ]
+}  
+```
 
 # APP ARCHITECTURE
 
@@ -71,7 +130,7 @@ Three JARS (3 projects)
    * Synchronization and Locking is critical.
 
 ### Implementation
-* Google EventBus from Guava Library will be utilized as broker for publisher/subscriber (Apache Kafka would be a better implementation)
+* Google EventBus from Guava Library will be utilized as broker for publisher/subscriber (Apache Kafka/Flink would be a better implementation)
 * An interface which provides transformation of notations (currency pairs, etc)
 * A Config class will setup the configuration.
 

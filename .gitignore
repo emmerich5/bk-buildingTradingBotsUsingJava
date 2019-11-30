@@ -1,2 +1,5 @@
 /errata_target
+bin/
+.settings/
+.classpath
 .project
